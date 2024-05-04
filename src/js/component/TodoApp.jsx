@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TodoHeader from "./TodoHeader";
 import TodoBody from "./TodoBody";
 import TodoFooter from "./TodoFooter";
@@ -6,26 +6,28 @@ import TodoFooter from "./TodoFooter";
 //styles
 import '../../styles/TodoApp.css'
 
-const TASKS = [
-    {id: 0, task: "Wash car"},
-    {id: 1, task: "Do homework"},
-    {id: 2, task: "Mow the lawn"}
-]
-
-
 
 const TodoApp = () => {
+    const [todos, setTodos] = useState([]);
+    
 	return (
 		<>
+        <div className="container-fluid"><h1>todos</h1></div>
         <div className="todos-wrapper">
             <div>
-                <TodoHeader />
+                <TodoHeader 
+                    todos={todos}
+                    setTodos={setTodos} 
+                />
             </div>
             <div>
-                <TodoBody todos={TASKS}/>
+                <TodoBody
+                    todos={todos} 
+                    setTodos={setTodos}
+                 />
             </div>
             <div>
-                <TodoFooter todos={TASKS}/>
+                <TodoFooter todos={todos}/>
             </div>
         </div>
         </>

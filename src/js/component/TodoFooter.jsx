@@ -1,5 +1,7 @@
 import React from "react";
 
+//styles
+import '../../styles/TodoFooter.css'
 
 const TodoFooter = ({todos}) => {
 	return (

@@ -5,9 +5,36 @@
 ul {
     list-style-type: none;
     margin-left: -20px;
+    border-top: grey;
 }
+
 
 .task {
     display: inline-block;
-    width: 80%;
+    width: 90%;
+}
+.trash {
+    width:100px;
+    margin-left: -100px;
+}
+
+            .trash {
+                visibility: hidden;
+                cursor: pointer;
+            }
+            .task:hover + .trash {
+                cursor:pointer;
+                visibility: visible;
+                 flex-wrap: nowrap;
+            }
+            .trash:hover {
+                cursor:pointer;
+                visibility: visible;
+                flex-wrap: nowrap;
+            }
+            
+.h_line{
+    width:60%;
+    height:1px; 
+    background:lightgrey; 
 }

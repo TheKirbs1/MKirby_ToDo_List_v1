@@ -2,3 +2,14 @@
     margin-right: 20px;
     width: 300px;
 }
+
+.container-fluid {
+    margin-top: 50px;
+    text-align: center;
+    width: 100%;
+    color:rgba(172, 1, 1, 0.288);
+}
+
+.task-input {
+    border:none;
+}
