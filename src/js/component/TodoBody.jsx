@@ -1,29 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //styles
 import '../../styles/TodoBody.css'
 
-//the delete button will appear only on hover
-
-//be able to delete a task by clicking the trash icon
-//we will us arrays.filter() to help with removing the task object
-//creating a function to delete the task, require the id
-
 const TodoBody = ({todos, setTodos}) => {
 	
+	//useEffect -> allows us to synchronize a component with an external system
+	//We can use useEffect to make a fetch call and retrieve our todo list
+
+	//useEffect has 2 paramaters (callback function, dependency array)
+	// the callback function will be where we use our fetch call and process the response.
+	// the dependency array is used to determine how the browser will rerender information
+	useEffect(() => {
+		fetch('https://playground.4geeks.com/todo/users/MKirby')
+		.then(response => response.json())
+		.then(data => {
+			setTodos(data.todos)
+		})
+		.catch(error => console.log("Error", error))
+	}, [todos])
+
+	// //create a useEffect to delete a task
+	// useEffect(() => {
+	// 	fetch('https://playground.4geeks.com/todo/todos/2')
+	// 	.then()
+	// }, [])
+
 	const deleteTask = (selectedTodoId) => {
-		//filter the todos and keep any todo that does NOT match the id
-		//assign it to a new array variable
-		// then we can call setTodos to set the filtered array
 		let updatedTodos = todos.filter(todo => todo.id !== selectedTodoId);
 		setTodos(updatedTodos);
 	}
+	
 
 	let renderTasks = todos.map(todo => {
 		return (
 
 			<li key={todo.id}className="task-item">
-				<span className="task">{todo.title}</span>
+				<span className="task">{todo.label}</span>
 				<span className="trash">
 					<svg xmlns="http://www.w3.org/2000/svg" 
 					width="18" 
