@@ -5,12 +5,6 @@ import '../../styles/TodoBody.css'
 
 const TodoBody = ({todos, setTodos}) => {
 	
-	//useEffect -> allows us to synchronize a component with an external system
-	//We can use useEffect to make a fetch call and retrieve our todo list
-
-	//useEffect has 2 paramaters (callback function, dependency array)
-	// the callback function will be where we use our fetch call and process the response.
-	// the dependency array is used to determine how the browser will rerender information
 	useEffect(() => {
 		fetch('https://playground.4geeks.com/todo/users/MKirby')
 		.then(response => response.json())
@@ -20,16 +14,27 @@ const TodoBody = ({todos, setTodos}) => {
 		.catch(error => console.log("Error", error))
 	}, [todos])
 
-	// //create a useEffect to delete a task
-	// useEffect(() => {
-	// 	fetch('https://playground.4geeks.com/todo/todos/2')
-	// 	.then()
-	// }, [])
+	const deleteTask = async (selectedTodoId) => {
+        let updatedTodos = todos.filter(todo => todo.id !== selectedTodoId);
+        setTodos(updatedTodos);
+        
+        const response = await fetch(`https://playground.4geeks.com/todo/todos/${selectedTodoId}`, {
+            method: 'DELETE'
+        });
 
-	const deleteTask = (selectedTodoId) => {
-		let updatedTodos = todos.filter(todo => todo.id !== selectedTodoId);
-		setTodos(updatedTodos);
-	}
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            console.log('Error: ', response.status, response.statusText);
+            return {
+                error: {
+                    status: response.status, 
+                    statusText: response.statusText
+                }
+            }
+        }
+    }
 	
 
 	let renderTasks = todos.map(todo => {
