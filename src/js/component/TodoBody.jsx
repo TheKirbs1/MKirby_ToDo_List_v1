@@ -12,7 +12,7 @@ const TodoBody = ({todos, setTodos}) => {
 			setTodos(data.todos)
 		})
 		.catch(error => console.log("Error", error))
-	}, [todos])
+	}, [])
 
 	const deleteTask = async (selectedTodoId) => {
         let updatedTodos = todos.filter(todo => todo.id !== selectedTodoId);
@@ -35,7 +35,6 @@ const TodoBody = ({todos, setTodos}) => {
             }
         }
     }
-	
 
 	let renderTasks = todos.map(todo => {
 		return (
