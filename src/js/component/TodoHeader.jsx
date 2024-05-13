@@ -6,19 +6,44 @@ import '../../styles/TodoHeader.css'
 
 const TodoHeader = ({todos, setTodos}) => {
 	const [newTask, setNewTask] = useState("")
-	const [idCounter, setIdCounter] = useState(0);
 
-	const addTask = () => {
-		// console.log("creating new task: ", newTask)
-		
-		let newTodoObject = {
-			id: idCounter,
-			title: newTask, 
-		};
 
-		setTodos([...todos, newTodoObject]);
-		setIdCounter(idCounter +1);
-	}
+	const postNewTask = async (todoObject) => {
+        const options = {
+            method: 'POST',
+            body: JSON.stringify(todoObject),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const response = await fetch('https://playground.4geeks.com/todo/todos/MKirby', options)
+        if (response.ok) {
+            const data = await response.json();
+            return data;
+        } else {
+            console.log('Error: ', response.status, response.statusText);
+            return {
+                error: {
+                    status: response.status, 
+                    statusText: response.statusText
+                }
+            }
+        }
+    }
+    
+    const addTask = () => {
+
+        let newTodoObject = {
+            label: newTask,
+            is_done: false
+        };
+        
+        const newTodos = [...todos, newTodoObject];
+        setTodos(newTodos);
+
+        postNewTask(newTodoObject);
+    }
 	//text validation
 	const checkTextBox = () => {
 		let textBox = document.querySelector(".task-input");
